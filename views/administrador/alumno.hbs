@@ -1,30 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<body>
+<body id="main">
+
     <h1>ALUMNOS</h1>
 
-    <form action="/user/insert_alu" class="w3-container w3-card-2 w3-light-grey w3-text-blue" method="POST">
-        <h2 class="w3-center">Registrar Alumno</h2>
-        
+    <form class="w3-container w3-card-2 w3-light-grey w3-text-blue">
+        <h2 class="w3-center">Registrar Alumno</h2>    
         <div class="w3-row w3-section">
             <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-id-card-o"></i></div>
             <div class="w3-rest">
-            <input class="w3-input w3-border" name="doc_id" type="text" placeholder="Nro de documento">
+                <input class="w3-input w3-border" id="doc_id" type="text" placeholder="Nro de documento">
             </div>
         </div>
-
         <div class="w3-row w3-section">
             <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user"></i></div>
             <div class="w3-rest">
-            <input class="w3-input w3-border" name="nom_ape" type="text" placeholder="Nombres y apellidos">
+                <input class="w3-input w3-border" id="nom_ape" type="text" placeholder="Nombres y apellidos">
             </div>
         </div>
-
-        <p class="w3-center">
-        <button class="w3-button w3-section w3-blue w3-ripple"> REGISTRAR </button>
-        </p>
+        <p class="w3-center"><button type="button" onclick="Insert_alumno()" class="w3-button w3-section w3-blue w3-ripple"> REGISTRAR </button></p>
     </form>
+    
     <br>
 
     <!--Read-->
@@ -36,13 +31,31 @@
             {{alumno_nombre}} <br>
             Nro Doc: {{alumno_doc}} <br>
             <form>
+                <!--Update-->
                 <button class="w3-button w3-light-gray" type="submit" name="upd" value="{{alumno_doc}}" formaction="/users/update_alu" formmethod="POST"><i class="w3-xlarge fa fa-pencil-square-o"></i></button>
+                <!--Delete-->
                 <button class="w3-button w3-light-gray" type="submit" name="del" value="{{alumno_doc}}" formaction="/users/delete_alu" formmethod="POST"><i class="w3-xlarge fa fa-trash-o"></i></button>
             </form>
         </li>
     {{/each}}
     </ul>
 
-</body>
+    <p><b><a class="w3-button w3-block w3-blue" href="/users/aluRet">Ver Alumnos retirados</a></b></p>
+    <script>
+        function Insert_alumno() {
+            var doc = document.getElementById('doc_id').value;
+            var nom = document.getElementById('nom_ape').value;
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("main").innerHTML = this.responseText;
+                }
+            };
+            xhttp.open("POST", "/users/insert_alu", true);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send("doc_id="+doc+"&nom_ape="+nom);
+        }
+    </script>
 
-</html>
+
+</body>

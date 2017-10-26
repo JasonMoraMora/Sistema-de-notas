@@ -1,0 +1,17 @@
+<body>
+    <h2 class="w3-center">Alumnos retirados</h2>    
+    <input type="text" oninput="w3.filterHTML('#id01', 'li', this.value)" placeholder="Search Alumno" class="w3-block w3-input">
+    <br>
+    <ul id="id01" class="w3-ul w3-border w3-card-2 w3-margin-bottom">
+    {{#each listado}}
+        <li class="w3-padding-16">
+            {{alumno_nombre}} <br>
+            Nro Doc: {{alumno_doc}} <br>
+            <form>
+                <!--Update-->
+                <button class="w3-button w3-light-gray" type="submit" name="ret" value="{{alumno_doc}}" formaction="/users/aluRem" formmethod="POST">Retomar estudios</button>
+            </form>
+        </li>
+    {{/each}}
+    </ul>
+</body>
